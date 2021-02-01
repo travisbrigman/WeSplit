@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var checkAmount = ""
     @State private var numberOfPeople = ""
     @State private var tipPercentage = 2
+//    @State private var useRedText = false
     
     let tipPercentages = [10,15,20,25,0]
     
@@ -30,6 +31,10 @@ struct ContentView: View {
         let orderAmount = Double(checkAmount) ?? 0
         let tipValue = orderAmount / 100 * tipSelection
         return orderAmount + tipValue
+    }
+    var noTip: Bool {
+        let orderAmount = Double(checkAmount) ?? 0
+       return grandTotal == orderAmount
     }
     
     var body: some View {
@@ -52,10 +57,12 @@ struct ContentView: View {
                 }
                 Section{
                     Text("Check Total $\(grandTotal, specifier: "%.2F")")
+                        .foregroundColor(noTip ? .red : .none)
                 }
                 
                 Section(header:Text("Amount Per Person")){
                     Text("$\(totalPerPerson, specifier: "%.2F")")
+                    
                 }
             }
             
